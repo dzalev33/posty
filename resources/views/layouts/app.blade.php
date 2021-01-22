@@ -15,7 +15,7 @@
             <a href="" class="p-3">Home</a>
         </li>
         <li>
-            <a href="" class="p-3">Dashboard</a>
+            <a href="{{ route('dashboard') }}" class="p-3">Dashboard</a>
         </li>
         <li>
             <a href="" class="p-3">Post</a>
@@ -24,10 +24,10 @@
     <ul class="flex items-center">
         @auth
             <li>
-                <a href="" class="p-3">Stefan</a>
+                <a href="" class="p-3">{{ auth()->user()->name }}</a>
             </li>
             <li>
-                <form class="inline" action="{{ route('logout') }}" method="POST">
+                <form class="inline p-3" action="{{ route('logout') }}" method="POST">
                     @csrf
                     <button type="submit" >Logout</button>
                 </form>
