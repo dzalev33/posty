@@ -16,7 +16,13 @@ class CreatePostsTable extends Migration
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->text('body');
+            $table->integer('client_id')->nullable()->unsigned();
+            $table->string('item_npn');
+            $table->string('item_receiver');
+            $table->string('item_status');
+            $table->string('item_delivery_date');
+            $table->string('package_id');
+            $table->text('item_body');
             $table->timestamps();
         });
     }

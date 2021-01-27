@@ -10,7 +10,15 @@ class Post extends Model
     use HasFactory;
 
     protected $fillable = [
-        'body'];
+        'item_npn',
+        'item_receiver',
+        'item_status',
+        'item_delivery_date',
+        'item_body',
+        'user_id',
+        'client_id',
+        'package_id'
+    ];
 
 
     public function likedBy(User $user)
@@ -25,8 +33,17 @@ class Post extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function client()
+    {
+        return $this->belongsTo(Client::class);
+    }
+
     public function likes()
     {
         return $this->hasMany(Like::class);
     }
+
+
+
+
 }

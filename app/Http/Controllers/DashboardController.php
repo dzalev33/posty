@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Client;
+use App\Models\Post;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -12,8 +15,13 @@ class DashboardController extends Controller
         $this->middleware(['auth']);
     }
 
-    public function index()
-    {
-        return view('dashboard');
+    public function index(){
+
+        $clients = Client::paginate(20);
+        return view('dashboard', [
+            'clients' => $clients,
+
+
+        ]);
     }
 }

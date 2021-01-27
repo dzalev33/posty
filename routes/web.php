@@ -2,12 +2,15 @@
 
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
+use App\Http\Controllers\ClientController;
+use App\Http\Controllers\ClientItemController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\PostLikeController;
 use App\Http\Controllers\UserPostController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\PDFController;
 
 /*
 |--------------------------------------------------------------------------
@@ -47,6 +50,17 @@ Route::delete('/posts/{post}', [PostController::class, 'destroy'])->name('posts.
 
 Route::post('/posts/{post}/likes', [PostLikeController::class, 'store'])->name('posts.likes');
 Route::delete('/posts/{post}/likes', [PostLikeController::class, 'destroy'])->name('posts.likes');
+
+//clients
+Route::get('/clients', [ClientController::class, 'index'])->name('clients');
+Route::post('/clients', [ClientController::class, 'store']);
+Route::get('/clients/{client:name}/info', [ClientItemController::class, 'index'])->name('clients.info');
+
+
+
+Route::get('pdf/preview', [ClientItemController::class, 'preview'])->name('pdf.preview');
+Route::get('pdf/generate', [ClientItemController::class, 'generatePDF'])->name('pdf.generate');
+
 
 
 
