@@ -1,4 +1,4 @@
-@props(['post' => $post])
+@props(['post' => $post, 'revisions' => $revisions])
 <div class="mb-4">
     {{--    <a href="{{ route('users.posts', $post->user) }}" class="font-bold">{{ $post->user->name }}</a>--}}
     {{--    <span class="text-gray-600 text-sm">{{ $post->created_at->diffForHumans() }}</span>--}}
@@ -6,7 +6,7 @@
     {{--    {{ $post->client->name }}--}}
     <div class="flex justify-center">
         <div class="w-4/12 bg-white p-6 rounded-lg">
-            <p><span>ПРИКАЗ НА СИТЕ ПРАТКИ</span></p>
+            <p><span>ПРИКАЗ НА ПРАТКА</span></p>
         </div>
     </div>
     <div class="flex flex-col">
@@ -22,12 +22,20 @@
                         <tr>
                             <th scope="col"
                                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Архивски Број.
+                            </th>
+                            <th scope="col"
+                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 Клиент
                             </th>
 
                             <th scope="col"
                                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 НПН БРОЈ
+                            </th>
+                            <th scope="col"
+                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Доставувач
                             </th>
                             <th scope="col"
                                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -57,13 +65,25 @@
                         <tbody class="bg-white divide-y divide-gray-200">
                         <tr>
                             <td class="px-6 py-4 whitespace-nowrap">
+
+                                <div class="flex items-center">
+
+                                    <div class="ml-4">
+                                        <div class="text-sm font-medium text-gray-900">
+                                            {{ $post->id }}
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
                                 <div class="flex items-center">
 
                                     <div class="ml-4">
                                         <div class="text-sm font-medium text-gray-900">
                                             {{ $post->client->name }}
                                         </div>
-                                   </div>
+                                    </div>
                                 </div>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
@@ -72,7 +92,17 @@
                                         <div class="text-sm font-medium text-gray-900">
                                             {{ $post->item_npn }}
                                         </div>
-                                  </div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="flex items-center">
+
+                                    <div class="ml-4">
+                                        <div class="text-sm font-medium text-gray-900">
+                                            Панделина Влакевска
+                                        </div>
+                                    </div>
                                 </div>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
@@ -93,13 +123,14 @@
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                 {{ $post->item_body }}
                             </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                <form action="{{ route('posts.destroy', $post) }}" method="POST">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="text-blue-500">ИЗБРИШИ</button>
-                                </form>
-                            </td>
+                            {{--                            <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">--}}
+
+                            {{--                                <form action="{{ route('posts.destroy', $post) }}" method="POST">--}}
+                            {{--                                    @csrf--}}
+                            {{--                                    @method('DELETE')--}}
+                            {{--                                    <button type="submit" class="text-blue-500">ИЗБРИШИ</button>--}}
+                            {{--                                </form>--}}
+                            {{--                            </td>--}}
                         </tr>
                         <!-- More items... -->
                         </tbody>
@@ -108,4 +139,28 @@
             </div>
         </div>
     </div>
+
+
+    <div class="flex justify-center">
+        <div class=" bg-white p-6 rounded-lg">
+            <p><span>ИСТОРИЈА НА ПРАТКА</span></p>
+            @foreach($revisions as $history)
+
+                @if($history->revisionable_id === $post->id)
+
+                    @if($history->key == 'created_at' && !$history->old_value)
+                        <li><strong>{{ $history->userResponsible()->username }}</strong> ја креира пратката
+                            на: <strong>{{ $history->newValue() }}</strong></li>
+                    @else
+                        <li><strong>{{ $history->userResponsible()->username }}</strong> промени <strong>{{ $history->fieldName() }}</strong>
+                            Од <strong>{{ $history->oldValue() }}</strong> Во <strong>{{ $history->newValue() }}</strong>
+                            Време: <strong>{{$history->created_at}}</strong> </li>
+                    @endif
+                @endif
+
+            @endforeach
+        </div>
+    </div>
+
+
 </div>

@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="flex justify-center">
-        <div class="w-8/12 ">
+        <div class="w-12/12 ">
             <div class="p-6">
             </div>
             <div class="bg-white p-6 rounded-lg">
@@ -10,13 +10,15 @@
                 </div>
                 <div class="flex justify-center">
                     <div class="w-4/12 bg-white p-6 rounded-lg">
-                        <p><span> ИЗВЕШТАЈ ЗА УСПЕШНА ДОСТАВА</span></p>
+
+                        <p><span> ИЗВЕШТАЈ ЗА ПРАТКИ </span></p>
+
                     </div>
                 </div>
-                <div class="mb-4">
+                <div class="mb-6">
                     <div class="flex flex-col">
 
-                        <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+                        <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-12">
                             <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
                                 <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
 
@@ -27,12 +29,20 @@
                                         <tr>
                                             <th scope="col"
                                                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                Архивски Број.
+                                            </th>
+                                            <th scope="col"
+                                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                                 Клиент
                                             </th>
 
                                             <th scope="col"
                                                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                                 НПН БРОЈ
+                                            </th>
+                                            <th scope="col"
+                                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                Доставувач
                                             </th>
                                             <th scope="col"
                                                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -66,15 +76,26 @@
 
                                         <tr>
                                             <td class="px-6 py-4 whitespace-nowrap">
+
                                                 <div class="flex items-center">
 
                                                     <div class="ml-4">
                                                         <div class="text-sm font-medium text-gray-900">
-                                                            {{ $post->client->name }}
+                                                            {{ $post->id }}
                                                         </div>
-                                                        {{--                                        <div class="text-sm text-gray-500">--}}
-                                                        {{--                                            {{ $post->user->email }}--}}
-                                                        {{--                                        </div>--}}
+
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+
+                                                <div class="flex items-center">
+
+                                                    <div class="ml-4">
+                                                        <div class="text-sm font-medium text-gray-900">
+                                                            <a href="{{ route('posts.show', $post) }}"> {{ $post->client->name }}</a>
+                                                        </div>
+
                                                     </div>
                                                 </div>
                                             </td>
@@ -84,6 +105,16 @@
                                                     <div class="ml-4">
                                                         <div class="text-sm font-medium text-gray-900">
                                                             {{ $post->item_npn }}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <div class="flex items-center">
+
+                                                    <div class="ml-4">
+                                                        <div class="text-sm font-medium text-gray-900">
+                                                            {{ $post->item_package_receiver }}
                                                         </div>
                                                     </div>
                                                 </div>
@@ -106,13 +137,23 @@
                                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                                 {{ $post->item_body }}
                                             </td>
-{{--                                            <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">--}}
-{{--                                                <form action="{{ route('posts.destroy', $post) }}" method="POST">--}}
+                                            <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+{{--                                                <form action="{{ route('posts.update', $post) }}" method="POST">--}}
 {{--                                                    @csrf--}}
-{{--                                                    @method('DELETE')--}}
-{{--                                                    <button type="submit" class="text-blue-500">ИЗБРИШИ</button>--}}
+{{--                                                    @method('UPDATE')--}}
+{{--                                                    <button type="submit" class="text-blue-500">ПРОМЕНИ</button>--}}
 {{--                                                </form>--}}
-{{--                                            </td>--}}
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                                <a href="/posts/{{$post->id}}/edit"> ПРОМЕНИ </a>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                                <form action="{{ route('posts.destroy', $post) }}" method="POST">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="text-blue-500">ИЗБРИШИ</button>
+                                                </form>
+                                            </td>
                                         </tr>
 
                                             @endforeach

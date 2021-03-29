@@ -14,6 +14,7 @@
 {{--        <li>--}}
 {{--            <a href="" class="p-3">Home</a>--}}
 {{--        </li>--}}
+        @auth
         <li>
             <a href="{{ route('dashboard') }}" class="p-3">Конечни Извештаи</a>
         </li>
@@ -26,7 +27,7 @@
         </li>
     </ul>
     <ul class="flex items-center">
-        @auth
+
             <li>
                 <a href="" class="p-3">{{ auth()->user()->name }}</a>
             </li>

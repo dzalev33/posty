@@ -19,6 +19,7 @@ class CreatePostsTable extends Migration
             $table->integer('client_id')->nullable()->unsigned();
             $table->string('item_npn');
             $table->string('item_receiver');
+            $table->string('item_package_receiver');
             $table->string('item_status');
             $table->string('item_delivery_date');
             $table->string('package_id');
